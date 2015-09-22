@@ -1,0 +1,61 @@
+<!--
+patient_panel.html
+
+@author Jason McMullen, Amit Mondal, Tyler Russell
+-->
+
+<!-- Use base.html as a template for this page -->
+{% extends 'base.html' %}
+
+ <!-- Start our code from this section in base.html -->
+{% block content %}
+
+<div class="col-md-4">
+	<!--Display current profile status and information-->
+	<h3>Personal Information</h3>
+	<section>
+		<p>Name: {{ patient.first_name }} {{ patient.mid_initial }} {{ patient.last_name }}</p>
+		<p>Current Address: {{ patient.address }}</p>
+		<p style="padding-left:110px">{{ patient.city }}, {{ patient.state }} {{ patient.zipcode }}</p>
+		<p>Date of Birth: {{ patient.dob }}</p>
+		<p>Phone Number: {{ patient.phone }}</p>
+	</section>
+
+	<h3>Insurance Information</h3>
+	<section>
+		<p>Provider: {{ patient.ins_name }}</p>
+		<p>Policy Number: {{ patient.ins_num }}</p>
+		<p>Provider Contact: {{ patient.ins_phone }}</p>
+		<p>Doctor: {{ patient.doctor }}</p>
+	</section>
+
+	<h3>Emergency Contact</h3>
+	<section>
+		<p>Name: {{ patient.emerg_first_name }} {{ patient.emerg_last_name }}</p>
+		<p>Phone Number: {{ patient.emerg_phone }}</p>
+	</section>
+	<a href="{% url 'update_profile' %}" class="btn btn-success">Update</a><!--Submit Form Here-->
+</div>
+
+<div class="col-md-4"><!--List out current prescriptions-->
+	<h3>Prescriptions</h3>
+		<ul class="list-group">
+			{% for presc in patient.getPrescriptions %}
+				<li class="list-group-item">{{presc}}</li>
+			{% endfor %}
+		</ul>
+</div>
+
+<div class="col-md-4"><!--List out current appointment schedule-->
+	<h3>Appointments</h3>
+		<form action="appointment">
+			<input class="btn btn-default" type='submit' value='Manage Appointments'/>
+		</form>
+	<ul class="list-group">
+		{% for appointment in patient.getAppointments %}
+			<li class="list-group-item">{{appointment}}</li>
+		{% endfor %}
+	</ul>
+</div>
+
+{% endblock %}

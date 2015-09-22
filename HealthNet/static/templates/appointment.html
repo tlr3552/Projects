@@ -1,0 +1,124 @@
+<!--
+appointment.html
+
+@author Amit Mondal, Long Pham, Huy Vuong
+-->
+
+<!-- Use base.html as a template for this page -->
+{% extends 'base.html' %}
+
+ <!-- Start our code from this section in base.html -->
+{% block content %}
+<div style="margin-left:30px;">
+<h1>Appointment Control Panel</h1>
+</div>
+
+<!-- If an error was detected in the form, display this message -->
+      {% if form.errors %}
+      <p style="color: #FF0000">The form has errors that need your attention</p>
+      {% endif %}
+<form method="POST" action="">{% csrf_token %}
+    <div class="col-md-4">
+        <h4>Make An Appointment</h4>
+		<div class="register_div">
+            {% if form.start_date.errors %}
+                <p class="error">{{ form.start_date.errors }}</p>
+            {% endif %}
+            <p><label for="id_start_date"{% if form.start_date.errors %} class="error" {% endif %}>Date: {{ form.start_date }}</label></p>
+		</div>
+
+		<div class="register_div">
+            {% if form.start_time.errors %}
+                <p class="error">{{ form.start_time.errors }}</p>
+            {% endif %}
+            <p><label for="id_start_time"{% if form.start_time.errors %} class="error" {% endif %}>Start Time: {{ form.start_time }}</label></p>
+		</div>
+
+		<div class="register_div">
+            {% if form.end_time.errors %}
+                <p class="error">{{ form.end_time.errors }}</p>
+            {% endif %}
+            <p><label for="id_end_time"{% if form.end_time.errors %} class="error" {% endif %}>End Time: {{ form.end_time }}</label></p>
+        </div>
+
+        <!--Check if the current user is a doctor/patient and render accordingly.-->
+		{% if form.doctor %}
+    		<div class="register_div">
+                {% if form.doctor.errors %}
+                    <p class="error">{{ form.doctor.errors }}</p>
+                {% endif %}
+                <p><label for="id_doctor"{% if form.doctor.errors %} class="error" {% endif %}>Doctor: {{ form.doctor }}</label></p>
+                </div>
+        {% endif %}
+
+        {% if form.patient %}
+            <div class="register_div">
+                {% if form.patient.errors %}
+                    <p class="error">{{ form.patient.errors }}</p>
+                {% endif %}
+                <p><label for="id_patient"{% if form.patient.errors %} class="error" {% endif %}>Patient: {{ form.patient }}</label></p>
+            </div>
+        {% endif %}
+        <input type="submit" value="Create a New Appointment" class="btn btn-success">
+		<a class="btn btn-success" href="{% url 'profile' %}">Back</a>
+    </div>
+</form>
+
+<!--Display appointments list-->
+<div class="col-md-4">
+    <h4>Appointments List</h4>
+    <ul class="list-group">
+        {% for appointment in appointments %}
+            <li class="list-group-item">{{ appointment }}</li>
+            {% empty %}
+            <li class="list-group-item">You don't have any appointments!</li>
+        {% endfor %}
+    </ul>
+</div>
+
+<!--Display actual buttons for acting on appointments-->
+<div class="col-md-4">
+    <form action="/profile/appointment/modify/" method="POST">{% csrf_token %}
+        {{ queryform.as_p }}
+        <input class="btn btn-success" type="submit" value="Modify An Appointment"/>
+    </form>
+    <input class="btn btn-success" type="submit" value="Cancel An Appointment" onclick="deleteAppointment()"/>
+</div>
+
+<script>
+// using jQuery
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+function deleteAppointment() {
+    var csrftoken = getCookie('csrftoken');
+    var value = $("#id_id").val();
+    $.ajax({
+        beforeSend: function(xhr) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        },
+        headers: { 'X_METHODOVERRIDE': 'DELETE' },
+        method: "POST",
+        url: "/profile/appointment/",
+        data: {id: value},
+        })
+        .error(function() {
+            window.location.replace("/profile/");
+        });
+}
+</script>
+
+{% endblock %}

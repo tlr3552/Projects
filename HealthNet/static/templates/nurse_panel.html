@@ -1,0 +1,31 @@
+<!--
+nurse_panel.html
+
+@author Jason McMullen, Amit Mondal
+-->
+
+<!-- Use base.html as a template for this page -->
+{% extends 'base.html' %}
+
+ <!-- Start our code from this section in base.html -->
+{% block content %}
+
+<div class="col-md-4">
+	<h3>Nurse Profile</h3>
+	<section>
+		<p>Name: {{ nurse.first_name }} {{nurse.mid_initial}} {{ nurse.last_name }}</p>
+		<p>Phone Number: {{ nurse.phone }}</p>
+	</section>
+	<form action="appointment">
+		<input class="btn btn-default" type='submit' value='Manage Appointments'/>
+	</form>
+</div>
+<div class="col-md-4">
+	<h3>Prescriptions</h3>
+	<ul class="list-group">
+		{% for presc in nurse.getPrescriptions %}
+		<li class="list-group-item">{{presc}}</li>
+		{% endfor %}
+</div>
+
+{% endblock %}

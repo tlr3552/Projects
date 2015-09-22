@@ -1,0 +1,212 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+
+    <!-- If an error was detected in the form, display this message -->
+    {% if form.errors %}
+    <p style="color: #FF0000">The form has errors that need your attention</p>
+    {% endif %}
+
+    <ul class="nav nav-tabs">
+        <!-- If there is an error in this tab (Profile Information), make the tab text red to indicate the location of the error-->
+        {% if form.first_name.errors or form.mid_initial.errors or form.last_name.errors or form.dob.errors or form.phone.errors or form.appt_num.errors or form.address.errors or form.city.errors or form.state.errors or form.zipcode.errors %}
+            <li><a data-toggle="tab" href="#ProfileInfo" style="color: #FF0000">Profile Information</a></li>
+        {% else %}
+            <li><a data-toggle="tab" href="#ProfileInfo">Profile Information</a></li>
+        {% endif %}
+
+        <!-- If there is an error in this tab (Medical Information), make the tab text red to indicate the location of the error-->
+        {% if form.ins_name.errors or form.ins_num.errors or form.pref_hospital.errors %}
+            <li><a data-toggle="tab" href="#MedicalInfo" style="color: #FF0000">Medical Information</a></li>
+        {% else %}
+            <li><a data-toggle="tab" href="#MedicalInfo">Medical Information</a></li>
+        {% endif %}
+
+        <!-- If there is an error in this tab (Emergency Information), make the tab text red to indicate the location of the error-->
+        {% if form.emerg_first_name.errors or form.emerg_last_name.errors or form.emerg_phone.errors %}
+            <li><a data-toggle="tab" href="#EmergencyInfo" style="color: #FF0000">Emergency Information</a></li>
+        {% else %}
+            <li><a data-toggle="tab" href="#EmergencyInfo">Emergency Information</a></li>
+        {% endif %}
+    </ul>
+
+    <form action="" method="POST">{% csrf_token %}<!--Each "tab" is part of one large form, separated to avoid scrolling-->
+        <div class="tab-content">
+            <div id="ProfileInfo" class="tab-pane active">
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-md-4">
+
+                            <!--For each of these div tags, check for form errors-->
+                            <div class="register_div">
+                                {% if form.first_name.errors %}
+                                    <p class="error">{{ form.first_name.errors }}</p>
+                                {% endif %}
+                                <p><label for="id_first_name" {% if form.first_name.errors %} class="error" {% endif %}>First Name:</label>
+                                <p>{{ form.first_name }}</p>
+                                </p>
+                            </div>
+                            <div class="register_div">
+                                {% if form.mid_initial.errors %}
+                                    <p class="error">{{ form.mid_initial.errors }}</p>
+                                {% endif %}
+                                <p><label for="id_mid_initial" {% if form.mid_initial.errors %} class="error" {% endif %}>Middle Initial:</label>
+                                <p>{{ form.mid_initial }}</p>
+                                </p>
+                            </div>
+                            <div class="register_div">
+                                {% if form.last_name.errors %}
+                                    <p class="error">{{ form.last_name.errors }}</p>
+                                {% endif %}
+                                <p><label for="id_last_name" {% if form.last_name.errors %} class="error" {% endif %}>Last Name:</label>
+                                <p>{{ form.last_name }}</p>
+                                </p>
+                            </div>
+                            <div class="register_div">
+                                {% if form.dob.errors %}
+                                    <p class="error">{{ form.dob.errors }}</p>
+                                {% endif %}
+                                <p><label for="id_dob" {% if form.dob.errors %} class="error" {% endif %}>Date of Birth:</label>
+                                <p>{{ form.dob }}</p>
+                                </p>
+                            </div>
+                            <div class="register_div">
+                                {% if form.phone.errors %}
+                                    <p class="error">{{ form.phone.errors }}</p>
+                                {% endif %}
+                                <p><label for="id_phone" {% if form.phone.errors %} class="error" {% endif %}>Phone Number:</label>
+                                <p>{{ form.phone }}</p>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-4" style="padding-left: 60px">
+                            <div class="register_div">
+                                {% if form.appt_num.errors %}
+                                    <p class="error">{{ form.appt_num.errors }}</p>
+                                {% endif %}
+                                <p><label for="id_appt_num" {% if form.appt_num.errors %} class="error" {% endif %}>Apt. Number:</label>
+                                <p>{{ form.appt_num }}</p>
+                                </p>
+                            </div>
+                            <div class="register_div">
+                                {% if form.address.errors %}
+                                    <p class="error">{{ form.address.errors }}</p>
+                                {% endif %}
+                                <p><label for="id_address" {% if form.address.errors %} class="error" {% endif %}>Address:</label>
+                                <p>{{ form.address }}</p>
+                                </p>
+                            </div>
+                            <div class="register_div">
+                                {% if form.city.errors %}
+                                    <p class="error">{{ form.city.errors }}</p>
+                                {% endif %}
+                                <p><label for="id_city" {% if form.city.errors %} class="error" {% endif %}>City:</label>
+                                <p>{{ form.city }}</p>
+                                </p>
+                            </div>
+                            <div class="register_div">
+                                {% if form.state.errors %}
+                                    <p class="error">{{ form.state.errors }}</p>
+                                {% endif %}
+                                <p><label for="id_state" {% if form.state.errors %} class="error" {% endif %}>State:</label>
+                                <p>{{ form.state }}</p>
+                                </p>
+                            </div>
+                            <div class="register_div">
+                                {% if form.zipcode.errors %}
+                                    <p class="error">{{ form.zipcode.errors }}</p>
+                                {% endif %}
+                                <p><label for="id_zipcode" {% if form.zipcode.errors %} class="error" {% endif %}>Zip Code:</label>
+                                <p>{{ form.zipcode }}</p>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Medical information tab-->
+            <div id="MedicalInfo" class="tab-pane">
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="register_div">
+                                {% if form.ins_name.errors %}
+                                    <p class="error">{{ form.ins_name.errors }}</p>
+                                {% endif %}
+                                <p><label for="id_ins_name" {% if form.ins_name.errors %} class="error" {% endif %}>Insurance Provider:</label>
+                                <p>{{ form.ins_name }}</p>
+                                </p>
+                            </div>
+                            <div class="register_div">
+                                {% if form.ins_num.errors %}
+                                    <p class="error">{{ form.ins_num.errors }}</p>
+                                {% endif %}
+                                <p><label for="id_ins_num" {% if form.ins_num.errors %} class="error" {% endif %}>Insurance Policy Number:</label>
+                                <p>{{ form.ins_num }}</p>
+                                </p>
+                            </div>
+                            <div class="register_div">
+                                {% if form.ins_phone.errors %}
+                                    <p class="error">{{ form.ins_phone.errors }}</p>
+                                {% endif %}
+                                <p><label for="id_ins_phone" {% if form.ins_phone.errors %} class="error" {% endif %}>Provider's Phone Number:</label>
+                                <p>{{ form.ins_phone }}</p>
+                                </p>
+                            </div>
+                            <div class="register_div">
+                                {% if form.pref_hospital.errors %}
+                                    <p class="error">{{ form.pref_hospital.errors }}</p>
+                                {% endif %}
+                                <p><label for="id_pref_hospital" {% if form.pref_hospital.errors %} class="error" {% endif %}>Preferred Hospital:</label>
+                                <p>{{ form.pref_hospital }}</p>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="register_div">
+                          <label for="id_doctor">Doctor:</label>
+                          <p>{{ form.doctor }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="EmergencyInfo" class="tab-pane">
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="register_div">
+                                {% if form.emerg_first_name.errors %}
+                                    <p class="error">{{ form.emerg_first_name.errors }}</p>
+                                {% endif %}
+                                <p><label for="id_emerg_first_name" {% if form.emerg_first_name.errors %} class="error" {% endif %}>Emergency Contact's First Name:</label>
+                                <p>{{ form.emerg_first_name }}</p>
+                                </p>
+                            </div>
+                            <div class="register_div">
+                                {% if form.emerg_last_name.errors %}
+                                    <p class="error">{{ form.emerg_last_name.errors }}</p>
+                                {% endif %}
+                                <p><label for="id_emerg_last_name" {% if form.emerg_last_name.errors %} class="error" {% endif %}>Emergency Contact's Last Name:</label>
+                                <p>{{ form.emerg_last_name }}</p>
+                                </p>
+                            </div>
+                            <div class="register_div">
+                                {% if form.emerg_phone.errors %}
+                                    <p class="error">{{ form.emerg_phone.errors }}</p>
+                                {% endif %}
+                                <p><label for="id_emerg_phone" {% if form.emerg_phone.errors %} class="error" {% endif %}>Phone Number:</label>
+                                <p>{{ form.emerg_phone }}</p>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+<div class="row">
+    <input type='submit' class="btn btn-primary" value="Update" />
+    <a class="btn btn-danger" href="{% url 'profile' %}">Cancel</a>
+</div>
+</form>
+{% endblock %}

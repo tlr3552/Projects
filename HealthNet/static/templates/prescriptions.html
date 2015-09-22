@@ -1,0 +1,98 @@
+<!--
+prescriptions.html
+
+@author Long Pham
+-->
+
+<!-- Use base.html as a template for this page -->
+{% extends 'base.html' %}
+
+ <!-- Start our code from this section in base.html -->
+{% block content %}
+
+<h2>Prescription Control Panel</h2>
+
+<form method="POST" action="/profile/prescriptions/add/">{% csrf_token %}
+<div class="row">
+
+    <div class="col-md-4">
+      <h4>Add a New Prescription</h4>
+		
+		<!--Get each piece of data about a prescription and handle the user entering invalid
+		data -->
+		<!--Get Start date-->
+		<div class="register_div">
+			{% if form.start_date.errors %}
+				<p class="error">{{ form.start_date.errors }}</p>
+			{% endif %}
+			<p><label for="id_start_date"{% if form.start_date.errors %} class="error" {% endif %}>Start Date: {{ form.start_date }}</label>
+			</p>
+		</div>
+
+		<!--Get End date-->
+		<div class="register_div">
+		{% if form.end_date.errors %}<p class="error">{{ form.end_date.errors }}</p>{% endif %}
+		<p><label for="id_end_date"{% if form.end_date.errors %} class="error" {% endif %}>End Date: {{ form.end_date }}</label>
+		</p>
+		</div>
+
+		<!--Get Drug name-->
+		<div class="register_div">
+		{% if form.name.errors %}<p class="error">{{ form.name.errors }}</p>{% endif %}
+		<p><label for="id_name"{% if form.name.errors %} class="error" {% endif %}>Name: {{ form.name }}</label>
+		</p>
+		</div>
+
+		<!--Get Drug manufacturer-->
+		<div class="register_div">
+		{% if form.manufacturer.errors %}<p class="error">{{ form.manufacturer.errors }}</p>{% endif %}
+		<p><label for="id_manufacturer"{% if form.manufacturer.errors %} class="error" {% endif %}>Manufacturer: {{ form.manufacturer }}</label>
+		</p>
+		</div>
+
+		<!--Get Drug dosage-->
+        <div class="register_div">
+		{% if form.dosage.errors %}<p class="error">{{ form.dosage.errors }}</p>{% endif %}
+		<p><label for="id_dosage"{% if form.dosage.errors %} class="error" {% endif %}>Dosage: {{ form.dosage }}</label>
+		</p>
+		</div>
+
+		<!--Get drug instructions-->
+        <div class="register_div">
+		{% if form.instructions.errors %}<p class="error">{{ form.instructions.errors }}</p>{% endif %}
+		<p><label for="id_instructions"{% if form.instructions.errors %} class="error" {% endif %}>Instructions: {{ form.instructions }}</label>
+		</p>
+		</div>
+
+		<!--Submit-->
+		<div class="register_div">
+		{% if form.patient.errors %}<p class="error">{{ form.patient.errors }}</p>{% endif %}
+		<p><label for="id_patient"{% if form.patient.errors %} class="error" {% endif %}>Patient: {{ form.patient }}</label>
+		</p>
+		</div>
+        <input type="submit" value="Create a New Prescription" class="btn btn-success">
+		<a class="btn btn-success" href="{% url 'profile' %}">Back</a>
+	</form>
+</div>
+
+<!--Render current prescriptions-->
+<div class="col-md-4">
+	<h4>Current Prescriptions</h4>
+	<ul class="list-group">
+		{% for presc in prescriptions %}
+			<li class="list-group-item"> {{ presc }} </li>
+		{% endfor %}
+	</ul>
+</div>
+
+<!--Render option for user to remove prescriptions-->
+<div class="col-md-4">
+	<h4>Remove Prescriptions</h4>
+ 	<form action="/profile/prescriptions/delete/" method="POST">{% csrf_token %}
+  		{{ queryform.as_p }}
+  		<input type="submit" value="Delete Prescription" class="btn btn-success">
+	</form>
+</div>
+</div>
+
+{% endblock %}

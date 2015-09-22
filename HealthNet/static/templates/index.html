@@ -1,0 +1,24 @@
+<!--
+index.html
+
+@author Jason McMullen
+-->
+
+<!-- Use base.html as a template for this page -->
+{% extends 'base.html' %}
+ 
+ <!-- Start our code from this section in base.html -->
+{% block content %}
+
+<!-- Main jumbotron for a primary marketing message or call to action -->
+<div class="jumbotron">
+  <div class="container" style="text-align:center">
+    <h1>Welcome to HealthNet!</h1>
+  </div>
+</div>
+
+<div class="call-to-action" style="text-align:center">
+    <a href="{% url 'register' %}" class="btn btn-success btn-lg">Patient Registration</a>
+</div>
+    
+{% endblock %} 

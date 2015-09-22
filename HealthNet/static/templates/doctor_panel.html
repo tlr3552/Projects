@@ -1,0 +1,44 @@
+<!--
+doctor_panel.html
+
+@author Jason McMullen, Amit Mondal, Tyler Russell
+-->
+
+<!-- Use base.html as a template for this page -->
+{% extends 'base.html' %}
+
+ <!-- Start our code from this section in base.html -->
+{% block content %}
+
+<!--Profile page for a doctor-->
+<div class="col-md-4">
+	<h3>Doctor Profile</h3>
+	<p>Name: {{ doctor.first_name }} {{doctor.mid_initial}} {{ doctor.last_name }}</p>
+	<p>Phone Number: {{ doctor.phone }}</p>
+	<p>Accepting patients? {% if doctor.is_accepting %}Yes{% else %}No{% endif %}</p>
+	<a href="{% url 'doctor_update' %}" class="btn btn-success">Update</a>
+	<h4>Appointments</h4>
+	<ul class="list-group">
+		{% for appointment in doctor.getAppointments %}
+			<li class="list-group-item"> {{ appointment }} </li>
+		{% endfor %}
+	</ul>
+	<h4>Current Patients</h4>
+	<ul class="list-group">
+		{% for patient in doctor.getPatients %}
+			<li class="list-group-item"> {{ patient }}</li>
+		{% endfor %}
+	</ul>
+</div>
+<!--Doctors action panel displayed here-->
+<div class="col-md-4">
+	<h3>Doctor Actions</h3>
+	<form action="appointment">
+		<input class="btn btn-default" type='submit' value='Appointments Panel'/>
+	</form>
+	<form action="prescriptions">
+		<input class="btn btn-default" type='submit' value='Prescriptions Panel'/>
+	</form>
+</div>
+
+{% endblock %}

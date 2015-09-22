@@ -1,0 +1,83 @@
+<!--
+administrator_panel.html
+
+@author Jason McMullen, Amit Mondal
+-->
+
+<!-- Use base.html as a template for this page -->
+{% extends 'base.html' %}
+
+ <!-- Start our code from this section in base.html -->
+{% block content %}
+
+<!--Heading to tell user they are on the administrator page-->
+<div class="col-md-4">
+	<h3>Administrator Profile</h3>
+	<section>
+		<p>Name: {{ administrator.first_name }} {{administrator.mid_initial}} {{ administrator.last_name }}</p>
+		<p>Phone Number: {{ administrator.phone }}</p>
+	</section>
+</div>
+
+<div class="col-md-4">
+	
+	<!--Display different form options an admin has-->
+	<h3>Administrator Actions</h3>
+	{% if form.errors %}
+		<p>Oops, your submission was invalid.</p>
+	{% endif %}
+	<!--Display buttons for admin to click. This handles creating users-->
+	<button type="button" onclick="toggleCreate()" class="btn btn-default">Create a User</button>
+	<div class="panel panel-default" id="create" style="display:none;">
+		<div class="panel-body">
+			<form method="POST" action="/profile/adduser/">{% csrf_token %}
+			{{ form.as_p }}
+			<input type="submit" value="Create" class="btn btn-default">
+		</form>
+		</div>
+	</div>
+
+	<!--And this handles deleting users-->
+	<button type="button" onclick="toggleDelete()" class="btn btn-default">Delete a User</button>
+	<div class="panel panel-default" id="delete" style="display:none;">
+		<div class="panel-body">
+			<h4>Search for a user</h4>
+			<form method="POST" action="/profile/searchuser/">{% csrf_token %}
+			{{ search.as_p }}
+			<input type="submit" value="Search" class="btn btn-default">
+		</form>
+		<ul class="list-group" style="padding-top:10px;">
+			{% if not results %}
+			<li class="list-group-item">No Results</li>
+			{% endif %}
+		{% for result in results %}
+		<li class="list-group-item"> {{ result }}</li>
+		{% endfor %}
+	</ul>
+	<form method="POST" action="/profile/deleteuser/">{% csrf_token %}
+		{{ deleteform.as_p }}
+		<input type="submit" value="Delete" class="btn btn-default">
+	</form>
+		</div>
+	</div>
+</div>
+
+<!--Display system logs-->
+<div class="col-md-4">
+	<h3> System Logs </h3>
+	<ul class="list-group">
+		{% for log in administrator.getLog %}
+			<li class="list-group-item"> {{ log }} </li>
+		{% endfor %}
+	</ul>
+</div>
+
+<script>
+function toggleCreate() {
+	$('#create').toggle();
+}
+function toggleDelete() {
+	$('#delete').toggle();
+}
+</script>
+{% endblock %}

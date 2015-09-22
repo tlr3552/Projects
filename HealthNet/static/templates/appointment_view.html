@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="margin-left:30px;">
+<h3>Modify an Appointment</h3>
+</div>
+
+<!-- If an error was detected in the form, display this message -->
+{% if form.errors %}
+	<p style="color: #FF0000">The form has errors that need your attention</p>
+{% endif %}
+<!--Renders the form for modifying appointments-->
+<form method="POST" action="/profile/appointment/modify/save/">{% csrf_token %}
+	<div class="col-md-4">
+		<div class="register_div">
+			{% if form.start_date.errors %}
+				<p class="error">{{ form.start_date.errors }}</p>
+			{% endif %}
+			<p><label for="id_start_date"{% if form.start_date.errors %} class="error" {% endif %}>Start Date: {{ form.start_date }}</label></p>
+		</div>
+
+		<div class="register_div">
+			{% if form.start_time.errors %}
+				<p class="error">{{ form.start_time.errors }}</p>
+			{% endif %}
+			<p><label for="id_start_time"{% if form.start_time.errors %} class="error" {% endif %}>Appointment Starts: {{ form.start_time }}</label></p>
+		</div>
+
+		<div class="register_div">
+			{% if form.end_time.errors %}
+				<p class="error">{{ form.end_time.errors }}</p>
+			{% endif %}
+			<p><label for="id_end_time"{% if form.end_time.errors %} class="error" {% endif %}>Appointment Ends: {{ form.end_time }}</label></p>
+		</div>
+
+		<!--This part of the form is different for different users, so check which it is-->
+		{% if form.doctor %}
+			<div class="register_div">
+				{% if form.end_time.errors %}
+					<p class="error">{{ form.doctor.errors }}</p>
+				{% endif %}
+				<p><label for="id_doctor"{% if form.end_time.errors %} class="error" {% endif %}>Doctor: {{ form.doctor }}</label></p>
+			</div>
+	  	{% endif %}
+
+	  	{% if form.patient and should_render %}
+			<div class="register_div">
+				{% if form.patient.errors %}
+					<p class="error">{{ form.patient.errors }}</p>
+				{% endif %}
+				<p><label for="id_patient"{% if form.patient.errors %} class="error" {% endif %}>Patient: {{ form.patient }}</label></p>
+			</div>
+	  	{% endif %}
+		<div class="row">
+	    <input type="submit" value="Modify" class="btn btn-success"><!--Submit button-->
+		<a class="btn btn-success" href="{% url 'appointment' %}">Back</a>
+		</div>
+	</div>
+</form>
+
+{% endblock %}

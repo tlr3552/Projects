@@ -1,0 +1,28 @@
+Notes for Meeting on CSX Project - 5/9/15
+
+Classes that we may need for the final part
+
+- A position class for the C3 game (C3Position)
+    
+    *We will need to implement the reveseBoard method for this game
+    
+    *This game is still binary scored so we will only need to evaluate 
+     for win/loss as was the case with the first two games
+
+     *The position value should probably we represented using a simple 2d array
+      as the demensions of the board will never change after intial creation.
+      
+- A Move class for the C3 game (C3Move)
+    
+    *Moves can be represented as integer values, if we rely on reverse board to
+     handle the different symbols for different players (a movew will always be X from it's perspective)
+
+- A driver class for the C3 game (ConnectThree)
+    
+    *This will also need methods to handle the parsing of the initial setup
+
+- A driver for the GUI
+    *I'm unsure as to how much of a GUI we need for this.
+     Are we planning on representing all games through a GUI or simply the conect 3 piece of it?
+     The answer to that determines how many classes we would need for the GUI. If it's just
+     connect three then one should be fine.

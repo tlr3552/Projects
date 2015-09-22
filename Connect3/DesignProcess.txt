@@ -1,0 +1,78 @@
+Design process for project # 2:
+
+In this implementation I have chosen to represent position using an interface that will be implemented by specific games to create classes such as "takeawayPosition" or "tiktaktoePosition"
+
+Looking at the evaluation algorithm what do we need to implement in the position interface?
+
+It seems that we will need a method to determine if the position is final as well as a method for scoring the position on the condition of final. These should look something like this.
+
+public boolean isFinal()
+
+public int getScore()
+
+These methods will be called sequentially. It may be possible to combine these methods into a single method however splitting the methods will lead to increased readability and should yield roughly equivalent performance.
+
+We will also need methods in order to get all possible positions that may result from the current position. In order to maintain as much abstraction as possible the concept of "moves" will be completly contained in the specific implementations of the position interface and so our method to "generate all legal moves and resulting positions" will simply return an array of positions. It will look something like this.
+
+public Position[] getResultPositions()
+
+
+
+    Edit:: The evaluate position algorithm is supposed to return the best move and position, this would require for the two methods to be split
+
+    an implementation may have the following methods
+
+    public Position getResultPosition(move int)
+
+    public int[] getPossibleMoves()
+
+It also may be possible that we'll need a method to "reverse the board" for more complex problems. This method will simply return a position. It should look as follows
+
+public Position reverseBoard()
+
+Now the actual abstract framework is easy to implement. It is just a matter of creating a class that implements the evaluate position algorithm that can be called from a driver for whichever game you're playing. The development of the specific game drivers is also relatively easy as the "logic" of the game will be contained inside the specific position implementations. We will start by outlining the specific implementations of the position class.
+
+In takeaway we will represent the position data with a simple int as the only position information is the number of pennies remaining. Thus a TAPosition (specific Position implementation of the take away game) must have a constructor that receives an integer. It may be desirable to prevent the use of the generic constructor as giving a default value to a TKPosition may be pointless. For the purposes of this implementation isFinal will return true if the position int is 0 and will return a score of +1 since the position evaluation is done before making a move and it can be inferred that the oponent has therefore taken the last penny and lost.
+
+In this case it may also be helpful to create an array with all possible moves, such as int[] moves = [1,2,3].
+
+In order to generate the getResultPositions() return all we need to do is:
+
+create position return array of size 3 (as this is the max)
+for each move in moves:
+    if position - move >= 0
+        add to return array new position(position - move)
+
+        EDIT:: this approach will not get both the ideal move and the ideal position. Another approach was used.
+
+
+
+In the case of takeaway it is unnecesary to reverse the board so this method should be made inaccesible.
+
+Part 2:
+
+The first major change that needs to be implemented is a change in the behavior of the "moves". In takeaway a simple integer array was used to store potential moves. In this implementation we're going to instead use a generic move interface with a more specific SMove and TAMove class for each respective game. This was also changed in the implementation of TakeAway.
+
+In takeaway "moves" are still represented by a single integer while in Stones the "moves" are represented using an integer array of length two holding an integer refering to the pile[0] from which to remove stones as well as a number of stones[1] to be removed.
+
+In this same round of changes some of the methods used in the Position interface were changed to return Objects allowing for greater abstraction. In addition some references to int were changed to Integer again for the sake of making the methods more general.
+
+After making the changes required for the adjustment to moves the underlying basics of the Stones game were implemented and a round of testing was conducted to ensure that the program behaved as expected before memoization is implemented.
+
+Some slight changes were made to the way that moves are referenced within the TakeAway driver class. Other than this both games were found to work with the generalized framework.
+
+Implementation of memoization was very straight forward. The only real design choices made were in the implementation of the equals method in both TAPosition and the SPosition. SPosition uses the shallow equality of the underlying Integer array to test for equality while TAPosition uses the shallow equality of the TAPosition's underlying position Integer. Hashtable was used as the data structure for the "memoizer" incase later implementations of the solver implement multi-threading as Hashtable is synchronized.
+
+Part 3:
+
+Code was added to the Evaler so that the board is reversed as is required by Connect 3. A depth control was also implemented so that the algorithm will only go to the depth specified. A depth of around 4 or 5 seems to be sufficient for these games. With a depth of 9-12 it is still possible to beat the solver, however it's  difficult. It was also necesary to create a for loop to generate a "default" move. This ensures that aslong as there is a valid move the algorithm will pick a default move incase there is no best move. It might be practical to alter the depth depending on the complexity of the game by storing a static depth variable in the specific implementations of the position interface.
+
+At higher demensions the depth of 9-12 may take too long to solve.
+
+The position value is being represented by a 2d array. This also lead to some minor issues when it came to ensuring deep equality and and making copies. This was resolved by creating a helper method.
+
+The GUI was implemented as an application with the solver's funcitonality being carried out through a Runnable class and the GUI's update functions using a simple Task. The GUI only displays for the -play- function. We did not use the '-' option as we were unsure what it did beyond the file input. The Best move function ONLY displays on the command line while play function displays throught the GUI aswell as the command line.
+
+
+
+

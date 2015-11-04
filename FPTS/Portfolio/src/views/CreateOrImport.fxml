@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane minHeight="200.0" minWidth="350.0" prefHeight="200.0" prefWidth="400.0" styleClass="background" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.CreateOrImportController">
+   <bottom>
+      <GridPane alignment="top_center" hgap="5" vgap="5" BorderPane.alignment="CENTER">
+         <children>
+            <Button onAction="#createPortfolio" prefHeight="50.0" prefWidth="173.0" text="Create New Portfolio" GridPane.rowIndex="3" />
+            <Button onAction="#importPortfolio" prefHeight="50.0" prefWidth="160.0" text="Import Portfolio" GridPane.columnIndex="8" GridPane.rowIndex="3" />
+            <Label fx:id="lblMessage" prefHeight="32.0" prefWidth="144.0" GridPane.rowIndex="12" />
+         </children>
+         <columnConstraints>
+            <ColumnConstraints />
+            <ColumnConstraints />
+            <ColumnConstraints />
+            <ColumnConstraints />
+            <ColumnConstraints />
+            <ColumnConstraints />
+            <ColumnConstraints />
+            <ColumnConstraints />
+            <ColumnConstraints />
+            <ColumnConstraints />
+         </columnConstraints>
+         <padding>
+            <Insets bottom="30" left="40" right="40" top="40" />
+         </padding>
+         <rowConstraints>
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+         </rowConstraints>
+      </GridPane>
+   </bottom>
+</BorderPane>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+
+<BorderPane minHeight="200.0" minWidth="350.0" prefHeight="200.0" prefWidth="400.0" styleClass="background" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LoginController">
+	<center>
+		<GridPane alignment="top_center" hgap="5" vgap="5">
+			<padding>
+				<Insets bottom="30" left="40" right="40" top="40" />
+			</padding>
+			<children>
+				<Label text="Username" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+				<TextField fx:id="txtUsername" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+				<Label text="Password" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+				<PasswordField fx:id="passPassword" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+				<Button onAction="#processLogin" prefHeight="26.0" prefWidth="100.0" text="Login" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
+				<Label fx:id="lblMessage" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Button onAction="#processRegisterWindow" prefHeight="26.0" prefWidth="100.0" text="Register" GridPane.rowIndex="3" />
+			</children>
+			<columnConstraints>
+				<ColumnConstraints />
+				<ColumnConstraints />
+				<ColumnConstraints />
+			</columnConstraints>
+			<rowConstraints>
+				<RowConstraints />
+				<RowConstraints />
+				<RowConstraints />
+            <RowConstraints />
+			</rowConstraints>
+		</GridPane>
+	</center>
+</BorderPane>

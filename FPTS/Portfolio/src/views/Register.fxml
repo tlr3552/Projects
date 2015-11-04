@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane minHeight="200.0" minWidth="350.0" prefHeight="200.0" prefWidth="400.0" styleClass="background" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.RegisterController">
+   <bottom>
+      <GridPane alignment="top_center" hgap="5" vgap="5" BorderPane.alignment="CENTER">
+         <children>
+            <Label text="Username" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+            <TextField fx:id="txtUsername" promptText="Homer Simpson" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+            <Label text="Password" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+            <PasswordField fx:id="passPassword" promptText="Password" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label fx:id="lblMessage" prefHeight="16.0" prefWidth="165.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <PasswordField fx:id="confirmPassword" promptText="Password" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label prefHeight="16.0" prefWidth="127.0" text="Confirm Password" GridPane.rowIndex="2" />
+            <Button onAction="#processRegister" prefHeight="26.0" prefWidth="158.0" text="Register" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Button onAction="#processBack" prefHeight="26.0" prefWidth="80.0" text="Back" GridPane.rowIndex="4" />
+         </children>
+         <columnConstraints>
+            <ColumnConstraints />
+            <ColumnConstraints />
+            <ColumnConstraints />
+         </columnConstraints>
+         <padding>
+            <Insets bottom="30" left="40" right="40" top="40" />
+         </padding>
+         <rowConstraints>
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+         </rowConstraints>
+      </GridPane>
+   </bottom>
+</BorderPane>

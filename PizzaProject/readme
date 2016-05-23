@@ -1,0 +1,6 @@
+Pizza Project was a team project from a Data Mining course. My team and I used a dataset pulled from the  
+popular sharing site Reddit, where people plead their case for free pizza. Based on post statistics from a JSON  
+file, our team created several different clustering and classifying algorithms in an attempt to predict which Reddit 
+posts would get pizza or not. In this project, I wrote a Naïve Bayes classifier using a Java library, and did the  
+data cleaning for the group. Obtained valuable insight into the world of big data and the use of computational    
+statistics in business.
